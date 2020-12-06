@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-constructor */
-import { AxiosStatic } from 'axios'
+import axios, { AxiosStatic } from 'axios'
 
 export interface StormGlassPointSource {
   [key: string]: number;
@@ -37,7 +37,7 @@ export class StormGlass {
 
   readonly stormGlassAPISource = 'noaa'
 
-  constructor (protected request: AxiosStatic) {}
+  constructor (protected request: AxiosStatic = axios) {}
 
   public async fetchPoints (lat: number, lng: number): Promise<ForecastPoint[]> {
     const response = await this.request.get<StormGlassForecastResponse>(
