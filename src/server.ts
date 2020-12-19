@@ -28,6 +28,12 @@ export class SetupServer extends Server {
     await database.close()
   }
 
+  public start (): void {
+    this.app.listen(this.port, () => {
+      console.log('Server listening on port: ' + this.port)
+    })
+  }
+
   private setupControllers (): void {
     const forecastController = new ForecastController()
     const beachesController = new BeachesController()
