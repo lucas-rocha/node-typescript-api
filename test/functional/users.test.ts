@@ -31,7 +31,7 @@ describe('Users functional tests', () => {
       });
     });
 
-    it('should throw 422 when the user already exists', async () => {
+    it('should throw 409 when the user already exists', async () => {
       const newUser = {
         name: 'Jhon Doe',
         email: 'jhon@mail.com',
@@ -40,10 +40,11 @@ describe('Users functional tests', () => {
       await global.testRequest.post('/users').send(newUser);
       const response = await global.testRequest.post('/users').send(newUser);
 
-      expect(response.status).toBe(422);
-      expect(response.body.error).toBe(
-        'User validation failed: email: already exists in the database.',
-      );
+      expect(response.status).toBe(409);
+      expect(response.body).toEqual({
+        code: 409,
+        error: 'User validation failed: email: already exists in the database.',
+      });
     });
   });
 });
